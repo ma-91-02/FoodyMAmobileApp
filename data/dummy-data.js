@@ -6,21 +6,22 @@ import selectService from "../models/selectServices";
 import Waiter from "../models/waiter";
 
 export const Languages = [
-  new Language("ar", "العربية", "#f5428d"),
-  new Language("en", "English", "#f54242"),
+  new Language("ar", "العربية", "اللغات"),
+  new Language("en", "English", "Languages"),
 ];
 export const SelectTables = [
-  new SelectTable("1", "ar", "من فضلك اختر طاولتك", "التالي"),
-  new SelectTable("2", "en", "please select your table", "next"),
+  new SelectTable("1", "ar", "من فضلك اختر طاولتك", "التالي", "الطاولة"),
+  new SelectTable("2", "en", "please select your table", "next", "Table"),
 ];
 export const selectServices = [
-  new selectService("1", "ar", "هل تريد الطلب بواسطة", "التطبيق", "النادل"),
+  new selectService("1", "ar", "هل تريد الطلب بواسطة", "التطبيق", "النادل",'الخدمات'),
   new selectService(
     "2",
     "en",
     "Do you want to order by",
     "Application",
-    "waiter"
+    "waiter",
+    "Services"
   ),
 ];
 
@@ -30,10 +31,10 @@ export const Waiters = [
 ];
 
 export const CATEGORIES = [
-  new Category("c1", "Italian", "en"),
+  new Category("c1", "Italian", "en", 'all Categories'),
   new Category("c2", "Quick & Easy", "en"),
   new Category("c3", "Hamburgers", "en"),
-  new Category("c1", "ايطالي", "ar"),
+  new Category("c1", "ايطالي", "ar", 'جميع الاقسام'),
   new Category("c2", "سهل وسريع", "ar"),
   new Category("c3", "همبركر", "ar"),
   new Category("c4", "German", "en"),
@@ -93,9 +94,9 @@ export const MEALS = [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg",
     20,
     [
-      "4 Tomatoes",
+      "٤ طماطة ",
       "1 Tablespoon of Olive Oil",
-      "1 Onion",
+      "١ بصل",
       "250g Spaghetti",
       "Spices",
       "Cheese (optional)",
@@ -233,7 +234,7 @@ export const MEALS = [
     false,
     false,
     false,
-    'en'
+    "en"
   ),
 
   new Meal(
@@ -266,7 +267,7 @@ export const MEALS = [
     false,
     true,
     true,
-    'en'
+    "en"
   ),
 
   new Meal(
@@ -300,7 +301,7 @@ export const MEALS = [
     false,
     true,
     false,
-    'en'
+    "en"
   ),
 
   new Meal(
@@ -330,7 +331,7 @@ export const MEALS = [
     false,
     true,
     false,
-    'en'
+    "en"
   ),
 
   new Meal(
@@ -362,7 +363,7 @@ export const MEALS = [
     false,
     false,
     true,
-    'en'
+    "en"
   ),
 
   new Meal(
@@ -410,7 +411,7 @@ export const MEALS = [
     false,
     true,
     false,
-    'en'
+    "en"
   ),
   new Meal(
     "m10",
@@ -440,6 +441,6 @@ export const MEALS = [
     true,
     true,
     true,
-    'en'
+    "en"
   ),
 ];

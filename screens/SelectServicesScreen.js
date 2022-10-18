@@ -14,6 +14,8 @@ function SelectServicesScreen({ route, navigation }) {
   displayedselectServices.forEach((element) => {
     data = element;
   });
+  // to set title of secreen
+  navigation.setOptions({ title: data.pageTitle });
   const byAppButton = data.byApp;
   const byWaiterButton = data.byWaiter;
 

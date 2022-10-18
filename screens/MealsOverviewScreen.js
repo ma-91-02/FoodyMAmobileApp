@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import MealItem from "../components/MealItem";
-import { MEALS } from "../data/dummy-data";
+import { MEALS, CATEGORIES } from "../data/dummy-data";
 
 function MealsOverviewScreen({ route, navigation }) {
   const langId = route.params.languageId;
@@ -14,10 +14,24 @@ function MealsOverviewScreen({ route, navigation }) {
   const data = meal.filter((mealIteml) => {
     return mealIteml.lang.indexOf(langId) >= 0;
   });
-
- 
+  // to find title of screen
+  const categoryTitle = CATEGORIES.find(
+    (category) => category.id === catId && category.lang === langId
+  );
+  // to set title of secreen
+  navigation.setOptions({ title: categoryTitle.title });
   function renderMealItem(itemData) {
-    return <MealItem title={itemData.item.title} />;
+    const item = itemData.item;
+    const mealItem = {
+      id:item.id,
+      langId:item.lang,
+      title: item.title,
+      imageUrl: item.imageUrl,
+      duration: item.duration,
+      complexity: item.complexity,
+      affordability: item.affordability,
+    };
+    return <MealItem {...mealItem} />;
   }
   return (
     <View>
