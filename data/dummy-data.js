@@ -1,14 +1,14 @@
-import Language from "../models/language";
+// import Language from "../models/language";
 import Category from "../models/category";
 import Meal from "../models/meal";
 import SelectTable from "../models/selectTable";
 import selectService from "../models/selectServices";
 import Waiter from "../models/waiter";
 
-export const Languages = [
-  new Language("ar", "العربية", "اللغات"),
-  new Language("en", "English", "Languages"),
-];
+// export const Languages = [
+//   new Language("ar", "العربية", "اللغات"),
+//   new Language("en", "English", "Languages"),
+// ];
 export const SelectTables = [
   new SelectTable("1", "ar", "من فضلك اختر طاولتك", "التالي", "الطاولة"),
   new SelectTable("2", "en", "please select your table", "next", "Table"),

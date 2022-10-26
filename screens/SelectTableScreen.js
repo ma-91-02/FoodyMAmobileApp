@@ -1,20 +1,48 @@
 import { View, Text, Button, TextInput, StyleSheet } from "react-native";
-import { SelectTables } from "../data/dummy-data";
-
+import { useEffect, useState } from "react";
+import { fetchSelectTable } from "../util/http";
 function SelectTableScreen({ route, navigation }) {
-  const langId = route.params.languageId;
+  const [fetchedSelectTable, setFechedSelectTable] = useState([]);
+  useEffect(() => {
+    async function getExpenses() {
+      const selectTable = await fetchSelectTable();
+      setFechedSelectTable(selectTable);
+    }
+    getExpenses();
+  }, []);
 
+  const langId = route.params.languageId;
   // filter language
-  const displayedSelectTables = SelectTables.filter((selectTableItem) => {
-    return selectTableItem.lang.indexOf(langId) >= 0;
+  const displayedSelectTables = fetchedSelectTable.filter((selectTableItem) => {
+    return selectTableItem.simpleLang.indexOf(langId) >= 0;
   });
-  // change arry to object
-  let data;
+
+  let data = "empty";
+
   displayedSelectTables.forEach((element) => {
     data = element;
   });
+
+  let titleButton ='next';
+  let pageContent='Select your table';
+  if (data !== "empty") {
+    // setPageTitle(data.pageTitle);
+    navigation.setOptions({ title: data.pageTitle });
+    titleButton=data.buttonContent;
+    pageContent=data.pageContent;
+  } else {
+    // setPageTitle(data.pageTitle);
+    navigation.setOptions({ title: "Select Table" });
+    // const titleButton = "buttonContent";
+  }
+  console.log(data);
+  // setPageTitle(data.pageTitle);
+  // navigation.setOptions({ title: data.pageTitle });
+  // change arry to object
+
   // to set title of secreen
-  navigation.setOptions({ title: data.pageTitle });
+  // navigation.setOptions({ title: data.pageTitle });
+
   // to go another screen
   function pressHandler() {
     navigation.navigate("SelectServices", {
@@ -22,13 +50,11 @@ function SelectTableScreen({ route, navigation }) {
       tableNumber: 3,
     });
   }
-  const titleButton = data.button;
   return (
     <>
       <View style={styles.container}>
-        <View>
-          <Text style={styles.text}>{data.title}</Text>
-        </View>
+        <View><Text style={styles.text}>{pageContent}</Text></View> 
+
         <View>
           <TextInput style={styles.textInput} />
         </View>

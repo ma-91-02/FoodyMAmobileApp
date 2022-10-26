@@ -15,13 +15,13 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#3f2f25" },
+            headerStyle: { backgroundColor: "#D2FFAF" },
+            headerTintColor: "#128917",
+            contentStyle: { backgroundColor: "#F4FFEB" },
           }}
         >
           <Stack.Screen name="Languages" component={LanguagesScreen} />

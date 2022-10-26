@@ -1,5 +1,7 @@
 import { Text, View, Button, StyleSheet } from "react-native";
 import { selectServices } from "../data/dummy-data";
+import {postWaiter} from '../util/http'; 
+
 
 function SelectServicesScreen({ route, navigation }) {
   const langId = route.params.languageId;
@@ -30,6 +32,11 @@ function SelectServicesScreen({ route, navigation }) {
       languageId: langId,
       tableNumber: 3,
     });
+    const data={
+      tableNumber:3,
+      textMessage:'pleace go table'
+    }
+    // postWaiter(data);
   }
 
   return (
