@@ -1,4 +1,4 @@
-import { Text, View, Image, StyleSheet, ScrollView } from "react-native";
+import { Text, View, Image, StyleSheet, ScrollView, Button } from "react-native";
 import { MEALS } from "../data/dummy-data";
 
 import MealDetails from "../components/MealDetails";
@@ -23,6 +23,7 @@ function MealDetailScreen({ route, navigation }) {
           complexity={data.complexity}
           textStyle={styles.detailText}
         />
+        <Button title="add"/>
         <View style={styles.listOuterContainer}>
           <View style={styles.listContainer}>
             <Subtitle>Ingredients</Subtitle>
@@ -51,15 +52,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 24,
     margin: 8,
-    color: "white",
+    color: '#128917',
   },
   detailText: {
-    color: "white",
+    color: "#128917",
   },
   listOuterContainer: {
     alignItems: "center",
   },
   listContainer: {
+    
     width: "80%",
   },
 });

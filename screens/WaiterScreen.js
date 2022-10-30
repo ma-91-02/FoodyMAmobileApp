@@ -15,9 +15,11 @@ function WaiterScreen({ route, navigation }) {
   function pressHandler() {
     navigation.navigate("Categores", {
       languageId: langId,
-      tableNumber: 3,
+      tableNumber: tableNumber,
     });
   }
+
+  console.log(tableNumber);
   return (
     <>
       <View style={styles.container}>

@@ -1,14 +1,41 @@
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  Keyboard,
+} from "react-native";
 import { useEffect, useState } from "react";
 import { fetchSelectTable } from "../util/http";
 function SelectTableScreen({ route, navigation }) {
   const [fetchedSelectTable, setFechedSelectTable] = useState([]);
+  const [text, onChangeText] = useState(0);
+  const [messageErr, setMessageErr] = useState("");
   useEffect(() => {
     async function getExpenses() {
       const selectTable = await fetchSelectTable();
       setFechedSelectTable(selectTable);
     }
     getExpenses();
+  }, []);
+
+  // set keyboard
+
+  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setKeyboardStatus("Keyboard Shown");
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardStatus("Keyboard Hidden");
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
   }, []);
 
   const langId = route.params.languageId;
@@ -23,19 +50,19 @@ function SelectTableScreen({ route, navigation }) {
     data = element;
   });
 
-  let titleButton ='next';
-  let pageContent='Select your table';
+  let titleButton = "next";
+  let pageContent = "Select your table";
   if (data !== "empty") {
     // setPageTitle(data.pageTitle);
     navigation.setOptions({ title: data.pageTitle });
-    titleButton=data.buttonContent;
-    pageContent=data.pageContent;
+    titleButton = data.buttonContent;
+    pageContent = data.pageContent;
   } else {
     // setPageTitle(data.pageTitle);
     navigation.setOptions({ title: "Select Table" });
     // const titleButton = "buttonContent";
   }
-  console.log(data);
+  // console.log(data);
   // setPageTitle(data.pageTitle);
   // navigation.setOptions({ title: data.pageTitle });
   // change arry to object
@@ -45,22 +72,44 @@ function SelectTableScreen({ route, navigation }) {
 
   // to go another screen
   function pressHandler() {
-    navigation.navigate("SelectServices", {
-      languageId: langId,
-      tableNumber: 3,
-    });
+    if (Number(text) === 0) {
+      setMessageErr("number table can't empty");
+      console.log(messageErr);
+    }
+    if (Number(text) !== 0 && text !== "" && typeof text !== "String") {
+      navigation.navigate("SelectServices", {
+        languageId: langId,
+        tableNumber: Number(text),
+      });
+      console.log(text);
+    }
   }
+  console.log(messageErr + " out fu");
+
+  // set keypord
+
   return (
     <>
       <View style={styles.container}>
-        <View><Text style={styles.text}>{pageContent}</Text></View> 
+        <View>
+          <Text style={styles.text}>{pageContent}</Text>
+          <Text style={styles.text}>{messageErr}</Text>
+        </View>
 
         <View>
-          <TextInput style={styles.textInput} />
+          <TextInput
+            KeyboardType="numeric"
+            style={styles.textInput}
+            placeholder={pageContent}
+            value={text}
+            onChangeText={onChangeText}
+            onSubmitEditing={Keyboard.dismiss}
+          />
         </View>
         <View style={styles.btnContainer}>
           <Button title={titleButton} onPress={pressHandler} />
         </View>
+        <Text style={styles.status}>{keyboardStatus}</Text>
       </View>
     </>
   );
@@ -86,7 +135,8 @@ const styles = StyleSheet.create({
   textInput: {
     borderColor: "green",
     borderWidth: 1,
-    width: 100,
+    width: "100%",
+    minWidth:120,
     height: 50,
     margin: 20,
     padding: 10,
@@ -97,5 +147,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: "80%",
     margin: 20,
+  },
+  status: {
+    padding: 10,
+    textAlign: "center",
   },
 });

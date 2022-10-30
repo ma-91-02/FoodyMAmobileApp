@@ -6,40 +6,45 @@ import LanguagesTitle from "../components/LanguagTitle";
 import { fetchLangauges } from "../util/http";
 
 function LanguagesScreen({ navigation }) {
-  const [fetchedExpenses, setFechedExpenses] = useState([]);
+  const [fetchedLanguages, setFechedLanguages] = useState([]);
+
   useEffect(() => {
     async function getLanguages() {
-      const expenses = await fetchLangauges();
-      setFechedExpenses(expenses);
+      const languages = await fetchLangauges();
+        setFechedLanguages(languages);
     }
     getLanguages();
   }, []);
+  // console.log(fetchedLanguages);
+  try {
+    if (fetchedLanguages.length > 0) {
+      function renderLanguageItem(itemData) {
+        console.log(itemData.item);
+        function pressHandler() {
+          navigation.navigate("SelectTable", {
+            languageId: itemData.item.simpleLang,
+          });
+        }
+        // return <LanguagesTitle title={itemData.item.lang} />;
+        return <LanguagesTitle title={itemData.item.lang} onPress={pressHandler} />;
+      }
+      return (
+        <>
+          <View style={styles.containerText}>
+            <Text style={styles.text}>please choose your language</Text>
+          </View>
 
-  console.log(fetchedExpenses);
-  function renderLanguageItem(itemData) {
-    function pressHandler() {
-      navigation.navigate("SelectTable", {
-        languageId: itemData.item.simpleLang,
-      });
+          <FlatList
+            data={fetchedLanguages}
+            keyExtractor={(item) => item.id}
+            renderItem={renderLanguageItem}
+          /> 
+        </>
+      );
     }
-    return (
-      <LanguagesTitle title={itemData.item.lang} onPress={pressHandler} />
-    );
+  } catch (error) {
+    console.log("some error");
   }
-
-  return (
-    <>
-      <View style={styles.containerText}>
-        <Text style={styles.text}>please choose your language</Text>
-      </View>
-
-      <FlatList
-        data={fetchedExpenses}
-        keyExtractor={(item) => item.id}
-        renderItem={renderLanguageItem}
-      />
-    </>
-  );
 }
 
 export default LanguagesScreen;
@@ -53,5 +58,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#128917",
   },
 });

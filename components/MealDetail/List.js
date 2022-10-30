@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 function List({ data }) {
   return data.map((dataPoint) => (
     <View style={styles.listItem} key={dataPoint}>
-      <Text>{dataPoint}</Text>
+      <Text style={styles.text}>{dataPoint}</Text>
     </View>
   ));
 }
@@ -17,6 +17,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     marginVertical: 4,
     marginHorizontal: 12,
-    backgroundColor: "white",
+    backgroundColor: "#F4FFEB",
+    borderWidth:1,
+    borderColor:'#128917',
+    
   },
+  text:{
+    color:'#128917'
+  }
 });

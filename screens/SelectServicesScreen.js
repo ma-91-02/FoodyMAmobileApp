@@ -24,21 +24,20 @@ function SelectServicesScreen({ route, navigation }) {
   function pressByAppHandler() {
     navigation.navigate("Categores", {
       languageId: langId,
-      tableNumber: 3,
+      tableNumber: tableNumber,
     });
   }
   function pressByWaiterHandler() {
     navigation.navigate("WaiterScreen", {
       languageId: langId,
-      tableNumber: 3,
+      tableNumber: tableNumber,
     });
     const data={
-      tableNumber:3,
-      textMessage:'pleace go table'
+      tableNumber:tableNumber,
+      textMessage:'Please go to the table'
     }
-    // postWaiter(data);
+    postWaiter(data);
   }
-
   return (
     <>
       <View style={styles.container}>
