@@ -5,6 +5,7 @@ import { MEALS, CATEGORIES } from "../data/dummy-data";
 function MealsOverviewScreen({ route, navigation }) {
   const langId = route.params.languageId;
   const catId = route.params.categoryId;
+  const tableNumber = route.params.tableNumber;
 
   // filter with category
   const meal = MEALS.filter((mealItem) => {
@@ -21,15 +22,17 @@ function MealsOverviewScreen({ route, navigation }) {
   // to set title of secreen
   navigation.setOptions({ title: categoryTitle.title });
   function renderMealItem(itemData) {
+    console.log(tableNumber + " from MealsOvervies");
     const item = itemData.item;
     const mealItem = {
-      id:item.id,
-      langId:item.lang,
+      id: item.id,
+      langId: item.lang,
       title: item.title,
       imageUrl: item.imageUrl,
       duration: item.duration,
       complexity: item.complexity,
       affordability: item.affordability,
+      tableNumber: tableNumber,
     };
     return <MealItem {...mealItem} />;
   }

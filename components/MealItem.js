@@ -18,14 +18,16 @@ function MealItem({
   duration,
   complexity,
   affordability,
+  tableNumber,
 }) {
   const navigation = useNavigation();
 
   function selectMealItemHandler() {
+    console.log(tableNumber + "from meal Item componant");
     navigation.navigate("MealDetail", {
       mealId: id,
       languageId: langId,
-      tableNumber: 3,
+      tableNumber: tableNumber,
     });
   }
   return (

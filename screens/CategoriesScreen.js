@@ -5,6 +5,7 @@ import { CATEGORIES } from "../data/dummy-data";
 
 function CategoriesScreen({ route, navigation }) {
   const langId = route.params.languageId;
+  const tableNumber = route.params.tableNumber;
   const displayedCaregories = CATEGORIES.filter((categoryItem) => {
     return categoryItem.lang.indexOf(langId) >= 0;
   });
@@ -20,10 +21,12 @@ function CategoriesScreen({ route, navigation }) {
 
   // to render Category item
   function renderCategoryItem(itemData) {
+    console.log(tableNumber + " from categories");
     function pressHandler() {
       navigation.navigate("MealsOverviewScreen", {
         languageId: langId,
         categoryId: itemData.item.id,
+        tableNumber: tableNumber || 0,
       });
     }
     return (

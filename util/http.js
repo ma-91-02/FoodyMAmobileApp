@@ -3,6 +3,7 @@ import axios from "axios";
 // import Waiter from "../models/waiter2";
 
 const BACKEND_URL = "https://foody-ma-backend.herokuapp.com";
+// const BACKEND_URL = "https://foody-ma-backend.herokuapp.com";
 
 
 export async function fetchLangauges() {
@@ -37,6 +38,13 @@ export async function fetchSelectTable() {
 
 export function postWaiter(data) {
   axios.post(BACKEND_URL + "/admin/v1/waiter", data, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+}
+export function postMealCard(data) {
+  axios.post(BACKEND_URL + "/v1/add-meal-card", data, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
