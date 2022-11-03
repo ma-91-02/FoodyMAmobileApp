@@ -19,10 +19,10 @@ function LanguagesScreen({ navigation }) {
   try {
     if (fetchedLanguages.length > 0) {
       function renderLanguageItem(itemData) {
-        console.log(itemData.item);
+        // console.log(itemData.item);
         function pressHandler() {
           navigation.navigate("SelectTable", {
-            languageId: itemData.item.simpleLang,
+            languageId: itemData.item.lang,
           });
         }
         // return <LanguagesTitle title={itemData.item.lang} />;

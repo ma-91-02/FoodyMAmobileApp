@@ -1,57 +1,57 @@
 // import Language from "../models/language";
-import Category from "../models/category";
-import Meal from "../models/meal";
-import SelectTable from "../models/selectTable";
-import selectService from "../models/selectServices";
-import Waiter from "../models/waiter";
+// import Category from "../models/category";
+// import Meal from "../models/meal";
+// import SelectTable from "../models/selectTable";
+// import selectService from "../models/selectServices";
+// import Waiter from "../models/waiter";
 
 // export const Languages = [
 //   new Language("ar", "العربية", "اللغات"),
 //   new Language("en", "English", "Languages"),
 // ];
-export const SelectTables = [
-  new SelectTable("1", "ar", "من فضلك اختر طاولتك", "التالي", "الطاولة"),
-  new SelectTable("2", "en", "please select your table", "next", "Table"),
-];
-export const selectServices = [
-  new selectService("1", "ar", "هل تريد الطلب بواسطة", "التطبيق", "النادل",'الخدمات'),
-  new selectService(
-    "2",
-    "en",
-    "Do you want to order by",
-    "Application",
-    "waiter",
-    "Services"
-  ),
-];
+// export const SelectTables = [
+//   new SelectTable("1", "العربية", "من فضلك اختر طاولتك", "التالي", "الطاولة"),
+//   new SelectTable("2", "en", "please select your table", "next", "Table"),
+// ];
+// export const selectServices = [
+//   new selectService("1", "ar", "هل تريد الطلب بواسطة", "التطبيق", "النادل",'الخدمات'),
+//   new selectService(
+//     "2",
+//     "en",
+//     "Do you want to order by",
+//     "Application",
+//     "waiter",
+//     "Services"
+//   ),
+// ];
 
-export const Waiters = [
-  new Waiter("1", "ar", "من فضلك انتظر سوف يحضر النادل قريبا", "المنيو"),
-  new Waiter("2", "en", "please wait, the waiter will come soon", "Menu"),
-];
+// export const Waiters = [
+//   new Waiter("1", "ar", "من فضلك انتظر سوف يحضر النادل قريبا", "المنيو"),
+//   new Waiter("2", "en", "please wait, the waiter will come soon", "Menu"),
+// ];
 
-export const CATEGORIES = [
-  new Category("c1", "Italian", "en", 'all Categories'),
-  new Category("c2", "Quick & Easy", "en"),
-  new Category("c3", "Hamburgers", "en"),
-  new Category("c1", "ايطالي", "ar", 'جميع الاقسام'),
-  new Category("c2", "سهل وسريع", "ar"),
-  new Category("c3", "همبركر", "ar"),
-  new Category("c4", "German", "en"),
-  new Category("c4", "الماني", "ar"),
-  new Category("c5", "Light & Lovely", "en"),
-  new Category("c5", "خفيف وجميل", "ar"),
-  new Category("c6", "Exotic", "en"),
-  new Category("c6", "مميز", "ar"),
-  new Category("c7", "Breakfast", "en"),
-  new Category("c7", "فطور", "ar"),
-  new Category("c8", "Asian", "en"),
-  new Category("c8", "اسيوي", "ar"),
-  new Category("c9", "French", "en"),
-  new Category("c9", "فرنسي", "ar"),
-  new Category("c10", "صيفي", "ar"),
-  new Category("c10", "Summer", "en"),
-];
+// export const CATEGORIES = [
+//   new Category("c1", "Italian", "en", 'all Categories'),
+//   new Category("c2", "Quick & Easy", "en"),
+//   new Category("c3", "Hamburgers", "en"),
+//   new Category("c1", "ايطالي", "ar", 'جميع الاقسام'),
+//   new Category("c2", "سهل وسريع", "ar"),
+//   new Category("c3", "همبركر", "ar"),
+//   new Category("c4", "German", "en"),
+//   new Category("c4", "الماني", "ar"),
+//   new Category("c5", "Light & Lovely", "en"),
+//   new Category("c5", "خفيف وجميل", "ar"),
+//   new Category("c6", "Exotic", "en"),
+//   new Category("c6", "مميز", "ar"),
+//   new Category("c7", "Breakfast", "en"),
+//   new Category("c7", "فطور", "ar"),
+//   new Category("c8", "Asian", "en"),
+//   new Category("c8", "اسيوي", "ar"),
+//   new Category("c9", "French", "en"),
+//   new Category("c9", "فرنسي", "ar"),
+//   new Category("c10", "صيفي", "ar"),
+//   new Category("c10", "Summer", "en"),
+// ];
 
 export const MEALS = [
   new Meal(

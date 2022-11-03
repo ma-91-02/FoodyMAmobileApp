@@ -1,31 +1,50 @@
-import { useLayoutEffect } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { useLayoutEffect, useEffect, useState } from "react";
+import { View, FlatList, StyleSheet, Text } from "react-native";
 import CategoryGridTitle from "../components/CategoryGridTitle";
-import { CATEGORIES } from "../data/dummy-data";
+import { fetchCategory, fetchCategoryContent } from "../util/http";
 
 function CategoriesScreen({ route, navigation }) {
+  const [fetchedCategory, setFechedCategory] = useState([]);
+  const [fetchedCategoryContent, setFechedCategoryContent] = useState([]);
   const langId = route.params.languageId;
   const tableNumber = route.params.tableNumber;
-  const displayedCaregories = CATEGORIES.filter((categoryItem) => {
-    return categoryItem.lang.indexOf(langId) >= 0;
-  });
 
-  // to set title of secreen
-  useLayoutEffect(() => {
+  // fetch Category content
+  useEffect(() => {
+    async function getCategoryContent() {
+      const categoryContent = await fetchCategoryContent();
+      setFechedCategoryContent(categoryContent);
+    }
+    getCategoryContent();
+  }, []);
+
+  // fetch category
+  useEffect(() => {
+    async function getCategory() {
+      const category = await fetchCategory();
+      setFechedCategory(category);
+    }
+    getCategory();
+  }, []);
+
+  const displayedCaregories = fetchedCategory.filter((categoryItem) => {
+    return categoryItem.language.indexOf(langId) >= 0;
+  });
+  if (fetchedCategoryContent.length > 0) {
     // to find title of screen
-    const categoryTitle = CATEGORIES.find(
-      (category) => category.lang === langId
+    const categoryTitle = fetchedCategoryContent.find(
+      (category) => category.language === langId
     );
     navigation.setOptions({ title: categoryTitle.pageTitle });
-  }, [langId, navigation]);
+  } else {
+  }
 
   // to render Category item
   function renderCategoryItem(itemData) {
-    console.log(tableNumber + " from categories");
     function pressHandler() {
       navigation.navigate("MealsOverviewScreen", {
         languageId: langId,
-        categoryId: itemData.item.id,
+        categoryId: itemData.item.id ,
         tableNumber: tableNumber || 0,
       });
     }

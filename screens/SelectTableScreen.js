@@ -1,13 +1,7 @@
-import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  StyleSheet,
-  Keyboard,
-} from "react-native";
+import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { fetchSelectTable } from "../util/http";
+
 function SelectTableScreen({ route, navigation }) {
   const [fetchedSelectTable, setFechedSelectTable] = useState([]);
   const [text, onChangeText] = useState(0);
@@ -20,55 +14,29 @@ function SelectTableScreen({ route, navigation }) {
     getExpenses();
   }, []);
 
-  // set keyboard
-
-  const [keyboardStatus, setKeyboardStatus] = useState(undefined);
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setKeyboardStatus("Keyboard Shown");
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardStatus("Keyboard Hidden");
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
-
   const langId = route.params.languageId;
+
   // filter language
   const displayedSelectTables = fetchedSelectTable.filter((selectTableItem) => {
-    return selectTableItem.simpleLang.indexOf(langId) >= 0;
+    return selectTableItem.language.indexOf(langId) >= 0;
   });
 
   let data = "empty";
+  let titleButton = "next";
+  let pageContent = "Select your table";
 
   displayedSelectTables.forEach((element) => {
     data = element;
   });
 
-  let titleButton = "next";
-  let pageContent = "Select your table";
   if (data !== "empty") {
     // setPageTitle(data.pageTitle);
     navigation.setOptions({ title: data.pageTitle });
     titleButton = data.buttonContent;
     pageContent = data.pageContent;
   } else {
-    // setPageTitle(data.pageTitle);
     navigation.setOptions({ title: "Select Table" });
-    // const titleButton = "buttonContent";
   }
-  // console.log(data);
-  // setPageTitle(data.pageTitle);
-  // navigation.setOptions({ title: data.pageTitle });
-  // change arry to object
-
-  // to set title of secreen
-  // navigation.setOptions({ title: data.pageTitle });
 
   // to go another screen
   function pressHandler() {
@@ -84,35 +52,40 @@ function SelectTableScreen({ route, navigation }) {
       console.log(text);
     }
   }
-  console.log(messageErr + " out fu");
 
-  // set keypord
-
-  return (
-    <>
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.text}>{pageContent}</Text>
-          <Text style={styles.text}>{messageErr}</Text>
+  if (data !== "empty") {
+    return (
+      <>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.text}>{pageContent}</Text>
+            <Text style={styles.text}>{messageErr}</Text>
+          </View>
+          <View>
+            <TextInput
+              style={styles.textInput}
+              placeholder={pageContent}
+              value={text}
+              onChangeText={onChangeText}
+            />
+          </View>
+          <View style={styles.btnContainer}>
+            <Button title={titleButton} onPress={pressHandler} />
+          </View>
         </View>
-
-        <View>
-          <TextInput
-            KeyboardType="numeric"
-            style={styles.textInput}
-            placeholder={pageContent}
-            value={text}
-            onChangeText={onChangeText}
-            onSubmitEditing={Keyboard.dismiss}
-          />
+      </>
+    );
+  } else if (data === "empty") {
+    return (
+      <>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.text}>This language is not supported</Text>
+          </View>
         </View>
-        <View style={styles.btnContainer}>
-          <Button title={titleButton} onPress={pressHandler} />
-        </View>
-        <Text style={styles.status}>{keyboardStatus}</Text>
-      </View>
-    </>
-  );
+      </>
+    );
+  }
 }
 
 export default SelectTableScreen;
@@ -136,7 +109,7 @@ const styles = StyleSheet.create({
     borderColor: "green",
     borderWidth: 1,
     width: "100%",
-    minWidth:120,
+    minWidth: 120,
     height: 50,
     margin: 20,
     padding: 10,

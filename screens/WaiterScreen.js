@@ -1,17 +1,31 @@
 import { View, Text, Button, StyleSheet } from "react-native";
-import { Waiters } from "../data/dummy-data";
+import { useEffect, useState } from "react";
+import { fetchWaiterPage } from "../util/http";
 
 function WaiterScreen({ route, navigation }) {
+  const [fetchedWaiter, setFechedWaiter] = useState([]);
   const langId = route.params.languageId;
   const tableNumber = route.params.tableNumber;
-  const displayedWaiters = Waiters.filter((WaitersItem) => {
-    return WaitersItem.lang.indexOf(langId) >= 0;
+
+  // fetch data from api
+  useEffect(() => {
+    async function getWaiter() {
+      const WaiterPage = await fetchWaiterPage();
+      setFechedWaiter(WaiterPage);
+    }
+    getWaiter();
+  }, []);
+  
+  // filter language
+  const displayedWaiters = fetchedWaiter.filter((WaitersItem) => {
+    return WaitersItem.language.indexOf(langId) >= 0;
   });
-  let data;
+  let data = "empty";
   displayedWaiters.forEach((element) => {
     data = element;
   });
-  const menuButton = data.menu;
+
+  // const menuButton = data.menu;
   function pressHandler() {
     navigation.navigate("Categores", {
       languageId: langId,
@@ -19,19 +33,31 @@ function WaiterScreen({ route, navigation }) {
     });
   }
 
-  console.log(tableNumber);
-  return (
-    <>
+  
+  if (data !== "empty") {
+    return (
+      <>
+        <View style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{data.pageContent}</Text>
+          </View>
+          <View style={styles.btnContainer}>
+            <Button title={data.buttonMenu} onPress={pressHandler} />
+          </View>
+        </View>
+      </>
+    );
+  } else{
+    return (
+      <>
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{data.message}</Text>
-        </View>
-        <View style={styles.btnContainer}>
-          <Button title={menuButton} onPress={pressHandler} />
+          <Text style={styles.text}>This page is not supported with this language </Text>
         </View>
       </View>
     </>
-  );
+    );
+  }
 }
 
 export default WaiterScreen;

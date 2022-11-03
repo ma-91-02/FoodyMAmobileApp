@@ -16,14 +16,12 @@ function MealItem({
   title,
   imageUrl,
   duration,
-  complexity,
-  affordability,
+  price,
   tableNumber,
 }) {
   const navigation = useNavigation();
 
   function selectMealItemHandler() {
-    console.log(tableNumber + "from meal Item componant");
     navigation.navigate("MealDetail", {
       mealId: id,
       languageId: langId,
@@ -45,8 +43,7 @@ function MealItem({
             </View>
             <MealDetails
               duration={duration}
-              affordability={affordability}
-              complexity={complexity}
+              price={price}
             />
           </View>
         </Pressable>
