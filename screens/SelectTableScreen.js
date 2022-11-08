@@ -4,7 +4,8 @@ import { fetchSelectTable } from "../util/http";
 
 function SelectTableScreen({ route, navigation }) {
   const [fetchedSelectTable, setFechedSelectTable] = useState([]);
-  const [text, onChangeText] = useState(0);
+  const [tableNumber, onChangeTableNumber] = useState(0);
+  const [nameClient, onChangeNameClient] = useState(0);
   const [messageErr, setMessageErr] = useState("");
   useEffect(() => {
     async function getExpenses() {
@@ -40,16 +41,16 @@ function SelectTableScreen({ route, navigation }) {
 
   // to go another screen
   function pressHandler() {
-    if (Number(text) === 0) {
+    if (Number(tableNumber) === 0) {
       setMessageErr("number table can't empty");
       console.log(messageErr);
     }
-    if (Number(text) !== 0 && text !== "" && typeof text !== "String") {
+    if (Number(tableNumber) !== 0 && tableNumber !== "" && typeof tableNumber !== "String") {
       navigation.navigate("SelectServices", {
         languageId: langId,
-        tableNumber: Number(text),
+        tableNumber: Number(tableNumber),
+        userName: nameClient,
       });
-      console.log(text);
     }
   }
 
@@ -65,8 +66,14 @@ function SelectTableScreen({ route, navigation }) {
             <TextInput
               style={styles.textInput}
               placeholder={pageContent}
-              value={text}
-              onChangeText={onChangeText}
+              value={tableNumber}
+              onChangeText={onChangeTableNumber}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder={pageContent}
+              value={nameClient}
+              onChangeText={onChangeNameClient}
             />
           </View>
           <View style={styles.btnContainer}>

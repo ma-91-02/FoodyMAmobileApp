@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useLayoutEffect, useEffect, useState } from "react";
 
-import { postMealCard, fetchMeal } from "../util/http";
+import { postMealCard, fetchMeal, postDeleteMealCard } from "../util/http";
 // import { MEALS } from "../data/dummy-data";
 
 import MealDetails from "../components/MealDetails";
@@ -30,26 +30,50 @@ function MealDetailScreen({ route, navigation }) {
     getMeal();
   }, []);
   // to select meal
-  let data='empty';
+  let data = "empty";
   if (fetchedMeal.length > 0) {
     data = fetchedMeal.find(
       (meal) => meal.id === mealId && meal.language === langId
     );
   }
   // Start function post to db
-  function pressMealCardHandler() {
-    const dataPost = {
-      tableNumber: tableNumber,
-      MealTitle: data.title,
-      MealCount: 1,
-      simpleLang: langId,
-      MealId: mealId,
+  function pressAddMealCardHandler() {
+    const dataPost = 
+    {
+      // _id:'636571cfe6613748943b0747',
+      // tableNumber: tableNumber,
+      // MealTitle: data.title,
+      // MealCount: 1,
+      // simpleLang: langId,
+      mealId: mealId,
     };
     postMealCard(dataPost);
     console.log(dataPost);
   }
+  function pressDeleteMealCardHandler() {
+    const dataPost = 
+    {
+      // _id:'636571cfe6613748943b0747',
+      // tableNumber: tableNumber,
+      // MealTitle: data.title,
+      // MealCount: 1,
+      // simpleLang: langId,
+      mealId: mealId,
+    };
+    postDeleteMealCard(dataPost);
+    console.log(dataPost);
+  }
+  // function pressMealCardHandler() {
+  //   navigation.navigate("CardScreen", {
+  //     tableNumber: tableNumber,
+  //     MealTitle: data.title,
+  //     MealCount: 1,
+  //     simpleLang: langId,
+  //     MealId: mealId,
+  //   });
+  // }
 
-  if (data !== 'empty') {
+  if (data !== "empty") {
     // start main function
     return (
       <>
@@ -61,7 +85,8 @@ function MealDetailScreen({ route, navigation }) {
             price={data.price}
             textStyle={styles.detailText}
           />
-          <Button title="add" onPress={pressMealCardHandler} />
+          <Button title="+" onPress={pressAddMealCardHandler} />
+          <Button title="-" onPress={pressDeleteMealCardHandler} />
           <View style={styles.listOuterContainer}>
             <View style={styles.listContainer}>
               <Subtitle>Ingredients</Subtitle>

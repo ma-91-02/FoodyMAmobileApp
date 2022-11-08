@@ -1,11 +1,12 @@
 import { Text, View, Button, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import { postWaiter, fetchSelectService } from "../util/http";
+import { postWaiter, fetchSelectService , postUser} from "../util/http";
 
 function SelectServicesScreen({ route, navigation }) {
   const [fetchedSelectService, setFechedSelectService] = useState([]);
   const langId = route.params.languageId;
   const tableNumber = route.params.tableNumber;
+  const userName = route.params.userName;
 
   useEffect(() => {
     async function getSelectSrvice() {
@@ -39,7 +40,27 @@ function SelectServicesScreen({ route, navigation }) {
       languageId: langId,
       tableNumber: tableNumber,
     });
+    const dataPost = {
+      language: langId,
+      tableNumber:tableNumber,
+      userName:userName,
+    }
+        postUser(dataPost);
+    console.log(dataPost);
   }
+
+    // Start function post to db
+  // function pressMealCardHandler() {
+  //   const dataPost = {
+  //     tableNumber: tableNumber,
+  //     MealTitle: data.title,
+  //     MealCount: 1,
+  //     simpleLang: langId,
+  //     MealId: mealId,
+  //   };
+  //   postMealCard(dataPost);
+  //   console.log(dataPost);
+  // }
   ///
   /// function go to page Waiter Screen
   ///

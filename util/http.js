@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// import Waiter from "../models/waiter2";
+
 
 // const BACKEND_URL = "https://foody-ma-backend.herokuapp.com";
 const BACKEND_URL = "http://localhost:8000";
@@ -52,6 +52,13 @@ export async function fetchSelectService() {
     selectService.push(selectServiceObj);
   }
   return selectService;
+}
+export function postUser(data) {
+  axios.post(BACKEND_URL + "/v1/add-user", data, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
 }
 //////////////// Waiter Page ////////////
 export async function fetchWaiterPage() {
@@ -131,8 +138,25 @@ export async function fetchMeal() {
   return meal;
 }
 
+// export function postMealCard(data) {
+//   axios.post(BACKEND_URL + "/v1/add-meal-card", data, {
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//   });
+// }
+
+////////////////// Cart ////////////
+
 export function postMealCard(data) {
-  axios.post(BACKEND_URL + "/v1/add-meal-card", data, {
+  axios.post(BACKEND_URL + "/v1/add-cart", data, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+}
+export function postDeleteMealCard(data) {
+  axios.post(BACKEND_URL + "/v1/delete-meal-cart", data, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
