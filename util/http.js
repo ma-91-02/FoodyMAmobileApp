@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 // const BACKEND_URL = "https://foody-ma-backend.herokuapp.com";
 const BACKEND_URL = "http://localhost:8000";
 
@@ -161,4 +159,20 @@ export function postDeleteMealCard(data) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
+}
+
+export async function fetchCard() {
+  const response = await axios.get(BACKEND_URL + "/v1/cart");
+  const card = [];
+  for (const key in response.data) {
+    const cardObj = {
+      id: response.data[key].mealId._id,
+      title: response.data[key].mealId.title,
+      price: response.data[key].mealId.price,
+      quantity: response.data[key].quantity,
+    };
+    // console.log(cardObj );
+    card.push(cardObj);
+  }
+  return card;
 }

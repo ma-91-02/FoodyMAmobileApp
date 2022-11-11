@@ -35,7 +35,8 @@ function CategoriesScreen({ route, navigation }) {
     const categoryTitle = fetchedCategoryContent.find(
       (category) => category.language === langId
     );
-    navigation.setOptions({ title: categoryTitle.pageTitle });
+    // navigation.setOptions({ title: categoryTitle.pageTitle });
+    navigation.setOptions({ title: '' });
   } else {
   }
 
@@ -73,5 +74,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "#fff",
+    height: "100%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
 });

@@ -20,18 +20,35 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: "#D2FFAF" },
+            headerStyle: {
+              backgroundColor: "#D2FFAF",
+            },
             headerTintColor: "#128917",
-            contentStyle: { backgroundColor: "#F4FFEB" },
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize:24,
+            },
+            headerShadowVisible: false,
+            contentStyle: { backgroundColor: "#D2FFAF" },
           }}
         >
-          <Stack.Screen name="Languages" component={LanguagesScreen} />
+          <Stack.Screen name="Languages" component={LanguagesScreen}  />
           <Stack.Screen
             name="Categores"
             component={CategoriesScreen}
             options={{ title: "All Categories" }}
           />
-          <Stack.Screen name="SelectTable" component={SelectTableScreen} />
+          <Stack.Screen
+            name="SelectTable"
+            component={SelectTableScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: "#EAF942",
+              },
+              headerTintColor: '#128917',
+
+            }}
+          />
           <Stack.Screen
             name="SelectServices"
             component={SelectServicesScreen}
@@ -48,6 +65,9 @@ export default function App() {
             options={{
               headerRight: () => {
                 return <Button title="Tap me" />;
+              },
+              headerTitle: () => {
+                return <Button title="Card" />;
               },
             }}
           />

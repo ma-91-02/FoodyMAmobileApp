@@ -1,4 +1,12 @@
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { fetchSelectTable } from "../util/http";
 
@@ -32,7 +40,8 @@ function SelectTableScreen({ route, navigation }) {
 
   if (data !== "empty") {
     // setPageTitle(data.pageTitle);
-    navigation.setOptions({ title: data.pageTitle });
+    navigation.setOptions({ title: '' });
+    // navigation.setOptions({ title: data.pageTitle });
     titleButton = data.buttonContent;
     pageContent = data.pageContent;
   } else {
@@ -45,7 +54,11 @@ function SelectTableScreen({ route, navigation }) {
       setMessageErr("number table can't empty");
       console.log(messageErr);
     }
-    if (Number(tableNumber) !== 0 && tableNumber !== "" && typeof tableNumber !== "String") {
+    if (
+      Number(tableNumber) !== 0 &&
+      tableNumber !== "" &&
+      typeof tableNumber !== "String"
+    ) {
       navigation.navigate("SelectServices", {
         languageId: langId,
         tableNumber: Number(tableNumber),
@@ -58,26 +71,44 @@ function SelectTableScreen({ route, navigation }) {
     return (
       <>
         <View style={styles.container}>
-          <View>
+          <View style={styles.textContainer}>
             <Text style={styles.text}>{pageContent}</Text>
             <Text style={styles.text}>{messageErr}</Text>
           </View>
-          <View>
-            <TextInput
-              style={styles.textInput}
-              placeholder={pageContent}
-              value={tableNumber}
-              onChangeText={onChangeTableNumber}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder={pageContent}
-              value={nameClient}
-              onChangeText={onChangeNameClient}
-            />
-          </View>
-          <View style={styles.btnContainer}>
-            <Button title={titleButton} onPress={pressHandler} />
+          <View style={styles.ContainerInput}>
+            <View>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Number Table"
+                value={tableNumber}
+                onChangeText={onChangeTableNumber}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Your Name"
+                value={nameClient}
+                onChangeText={onChangeNameClient}
+              />
+            </View>
+            <LinearGradient
+              colors={["#EAF942", "#D2FFAF"]}
+              style={styles.btnContainer}
+            >
+              <TouchableOpacity onPress={pressHandler}>
+                <View>
+                  <Text
+                    style={{
+                      color: "#128917",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {titleButton}
+                  </Text>
+
+                </View>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
         </View>
       </>
@@ -101,32 +132,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    margin: 16,
+    margin: 0,
+    backgroundColor: "#EAF942",
   },
   textContainer: {
-    flex: 1,
-    height: 20,
+    marginTop: 60,
+    marginBottom: 16,
   },
   text: {
-    fontSize: 20,
+    fontSize: 24,
+    color: "#128917",
     fontWeight: "bold",
-    margin: 20,
+
+    padding: 0,
+  },
+  ContainerInput: {
+    backgroundColor: "#fff",
+    width: "100%",
+    borderTopLeftRadius: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    // padding:20
   },
   textInput: {
-    borderColor: "green",
-    borderWidth: 1,
-    width: "100%",
-    minWidth: 120,
+    borderColor: "#A0A097",
+    borderBottomWidth: 1,
+    // width: "80%",
+    minWidth: "80%",
+    color: "#128917",
+    fontSize: 32,
     height: 50,
-    margin: 20,
-    padding: 10,
+    marginTop: 20,
+    padding: 8,
   },
   btnContainer: {
-    borderColor: "blue",
-    borderWidth: 1,
-    borderRadius: 8,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     width: "80%",
-    margin: 20,
+    height: 50,
+    marginTop: 60,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
   status: {
     padding: 10,

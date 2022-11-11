@@ -2,20 +2,20 @@ import { Text, View, StyleSheet } from "react-native";
 
 function MealDetails({
   duration,
-  complexity,
+  ingredients,
   price,
   style,
   textStyle,
 }) {
   return (
     <View style={[styles.details, style]}>
-      <Text style={[styles.detailsItem, textStyle]}>{duration}M  - </Text>
-      <Text style={[styles.detailsItem, textStyle]}>
+      <Text style={[styles.detailsItem, textStyle]}>{duration} m </Text>
+      <Text style={[styles.price, textStyle]}>
         {price.toUpperCase()}
       </Text>
-      <Text style={[styles.detailsItem, textStyle]}>
-        {/* {affordability.toUpperCase()} */}
-      </Text>
+      {/* <Text style={[styles.detailsItem, textStyle]}>
+        {ingredients.toUpperCase()}
+      </Text> */}
     </View>
   );
 }
@@ -24,6 +24,7 @@ export default MealDetails;
 
 const styles = StyleSheet.create({
   details: {
+    flex:1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -31,6 +32,19 @@ const styles = StyleSheet.create({
   },
   detailsItem: {
     marginHorizontal: 4,
-    fontSize: 12,
+    flex:1,
+    color:'#128917',
+    fontSize:16,
+    fontWeight:'400',
+    lineHeight:16,
+    textAlign:'left'
   },
+  price:{
+    flex:1,
+    color:'#128917',
+    fontSize:16,
+    fontWeight:'400',
+    lineHeight:16,
+    textAlign:'right'
+  }
 });

@@ -1,6 +1,14 @@
-import { Text, View, Button, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { useEffect, useState } from "react";
-import { postWaiter, fetchSelectService , postUser} from "../util/http";
+import { LinearGradient } from "expo-linear-gradient";
+import { postWaiter, fetchSelectService, postUser } from "../util/http";
 
 function SelectServicesScreen({ route, navigation }) {
   const [fetchedSelectService, setFechedSelectService] = useState([]);
@@ -29,7 +37,7 @@ function SelectServicesScreen({ route, navigation }) {
   });
   // to set title of secreen
   if (data !== "empty") {
-    navigation.setOptions({ title: data.pageTitle });
+    navigation.setOptions({ title: "" });
   }
 
   ///
@@ -42,14 +50,14 @@ function SelectServicesScreen({ route, navigation }) {
     });
     const dataPost = {
       language: langId,
-      tableNumber:tableNumber,
-      userName:userName,
-    }
-        postUser(dataPost);
+      tableNumber: tableNumber,
+      userName: userName,
+    };
+    postUser(dataPost);
     console.log(dataPost);
   }
 
-    // Start function post to db
+  // Start function post to db
   // function pressMealCardHandler() {
   //   const dataPost = {
   //     tableNumber: tableNumber,
@@ -73,24 +81,87 @@ function SelectServicesScreen({ route, navigation }) {
       tableNumber: tableNumber,
       textMessage: "Please go to the table",
     };
-    
+
     postWaiter(data);
   }
   if (data !== "empty") {
     return (
       <>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{data.pageContent}</Text>
+        </View>
         <View style={styles.container}>
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{data.pageContent}</Text>
+          {/* start block one */}
+          <View style={styles.block1}>
+            <View style={styles.blockContainer}>
+              <TouchableOpacity>
+                <View>
+                  <Text
+                    style={{
+                      color: "#128917",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {data.buttonByApp}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.blockContainer}>
+              <TouchableOpacity>
+                <View>
+                  <Text
+                    style={{
+                      color: "#128917",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {data.buttonByWaiter}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.btnContainer}>
-            <Button title={data.buttonByApp} onPress={pressByAppHandler} />
-          </View>
-          <View style={styles.btnContainer}>
-            <Button
-              title={data.buttonByWaiter}
-              onPress={pressByWaiterHandler}
-            />
+          {/* start block tow */}
+          <View style={styles.block2}>
+            <LinearGradient
+              colors={["#EAF942", "#D2FFAF"]}
+              style={styles.btnContainer}
+            >
+              <TouchableOpacity onPress={pressByAppHandler}>
+                <View>
+                  <Text
+                    style={{
+                      color: "#128917",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {data.buttonByApp}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </LinearGradient>
+            <LinearGradient
+              colors={["#EAF942", "#FDFFA5"]}
+              style={styles.btnContainer}
+            >
+              <TouchableOpacity onPress={pressByWaiterHandler}>
+                <View>
+                  <Text
+                    style={{
+                      color: "#128917",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {data.buttonByWaiter}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </LinearGradient>
           </View>
         </View>
       </>
@@ -109,22 +180,67 @@ function pressHandler() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
-    margin: 16,
+    // margin: 16,
+    height: "100%",
+    textAlign: "center",
+    borderTopLeftRadius: 50,
   },
+
   textContainer: {
-    height: 160,
+    // height: 160,
+    alignItems: "center",
+    padding: 0,
   },
   text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 20,
+    color: "#128917",
+    fontSize: 24,
+    fontWeight: "600",
+    margin: 16,
+    padding: 0,
+  },
+  block1: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  blockContainer: {
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    width: "40%",
+    height: 136,
+    marginTop: 60,
+    marginLeft: 10,
+    marginRight: 10,
+    // marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#D2FFAF",
+    elevation: 4,
+    backgroundColor: "#fff",
+    shadowOpacity: 0.85,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 4,
+    overflow: Platform.os === "android" ? "hidden" : "visible",
+  },
+  block2: {
+    flex: 1,
+    alignItems: "center",
+    // justifyContent:'center',
+    // flexDirection:'column'
+    width: "100%",
   },
   btnContainer: {
-    borderColor: "blue",
-    borderWidth: 1,
-    borderRadius: 8,
+    borderBottomLeftRadius: 35,
+    borderBottomRightRadius: 35,
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 35,
     width: "80%",
-    margin: 20,
+    height: 56,
+    margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

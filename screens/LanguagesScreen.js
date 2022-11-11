@@ -1,7 +1,16 @@
-import { FlatList, View, Text, StyleSheet } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Button,
+  BackHandler,
+  TouchableOpacity,
+} from "react-native";
 import { useEffect, useState } from "react";
 import LanguagesTitle from "../components/LanguagTitle";
-// import { Languages } from "../data/dummy-data";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { fetchLangauges } from "../util/http";
 
@@ -11,10 +20,11 @@ function LanguagesScreen({ navigation }) {
   useEffect(() => {
     async function getLanguages() {
       const languages = await fetchLangauges();
-        setFechedLanguages(languages);
+      setFechedLanguages(languages);
     }
     getLanguages();
   }, []);
+  navigation.setOptions({ title: "" }); /// to set page title
   // console.log(fetchedLanguages);
   try {
     if (fetchedLanguages.length > 0) {
@@ -26,19 +36,42 @@ function LanguagesScreen({ navigation }) {
           });
         }
         // return <LanguagesTitle title={itemData.item.lang} />;
-        return <LanguagesTitle title={itemData.item.lang} onPress={pressHandler} />;
+        return (
+          <LanguagesTitle title={itemData.item.lang} onPress={pressHandler} />
+        );
       }
       return (
         <>
           <View style={styles.containerText}>
-            <Text style={styles.text}>please choose your language</Text>
+            <Text style={styles.text}>Select Language </Text>
           </View>
-
-          <FlatList
-            data={fetchedLanguages}
-            keyExtractor={(item) => item.id}
-            renderItem={renderLanguageItem}
-          /> 
+          <View style={styles.container}>
+            <View style={styles.containerLang}>
+              <FlatList
+                data={fetchedLanguages}
+                keyExtractor={(item) => item.id}
+                renderItem={renderLanguageItem}
+              />
+            </View>
+            <View style={styles.btnMain}>
+              <LinearGradient
+                colors={["#EAF942", "#D2FFAF"]}
+                style={styles.btnContainer}
+              >
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      color: "#128917",
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    Exit
+                  </Text>
+                </TouchableOpacity>
+              </LinearGradient>
+            </View>
+          </View>
         </>
       );
     }
@@ -50,14 +83,66 @@ function LanguagesScreen({ navigation }) {
 export default LanguagesScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
+    height: "100%",
+    textAlign: "center",
+    borderTopLeftRadius: 50,
+  },
   containerText: {
-    margin: 25,
+    paddingTop: 50,
+    paddingBottom: 10,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#D2FFAF    ",
+    borderBottomWidth: 2,
+    borderColor: "#fff",
+    marginLeft: "25%",
+    marginRight: "25%",
+    marginBottom: 30,
   },
   text: {
-    fontSize: 18,
+    // borderWidth:20,
+    borderBottomColor: "#fff",
+    fontSize: 24,
     fontWeight: "bold",
     color: "#128917",
+  },
+  containerLang: {
+    marginTop: 25,
+    marginLeft: 25,
+    marginRight: 25,
+    marginBottom: 0,
+    paddingBottom: 20,
+    paddingTop: 48,
+    height: "60%",
+    // borderWidth: 1,
+    borderRadius: 16,
+    // zIndex:99,
+    // borderColor: "#F4FFEB",
+    elevation: 4,
+    backgroundColor: "#F4FFEB",
+    shadowColor: "black",
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    overflow: Platform.os === "android" ? "hidden" : "visible",
+  },
+  btnContainer: {
+    // borderRadius: "50%",
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    width: "100%",
+    height: 60,
+    // marginTop: 20,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btnMain: {
+    margin: 20,
+    textAlign: "center",
   },
 });

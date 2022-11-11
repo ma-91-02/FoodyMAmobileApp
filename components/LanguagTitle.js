@@ -12,7 +12,12 @@ function LanguagesTitle({ title, onPress }) {
         onPress={onPress}
       >
         <View style={styles.innerContainer}>
-          <Text style={styles.title}>{title}</Text>
+          <View style={styles.flag}>
+            {/* <Text>*</Text> */}
+          </View>
+          <View style={styles.flex}>
+            <Text style={styles.title}>{title}</Text>
+          </View>
         </View>
       </Pressable>
     </View>
@@ -24,17 +29,20 @@ export default LanguagesTitle;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 8,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 8,
+    marginBottom: 8,
     // height: 10,
-    borderRadius: 8,
-    elevation: 4,
+    // borderRadius: 8,
+    // elevation: 4,
     alignItems: "center",
-    backgroundColor: "white",
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    overflow: Platform.os === "android" ? "hidden" : "visible",
+    backgroundColor: "#F4FFEB",
+    // shadowColor: "black",
+    // shadowOpacity: 0.03,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowRadius: 8,
+    // overflow: Platform.os === "android" ? "hidden" : "visible",
   },
   button: {
     flex: 1,
@@ -44,13 +52,28 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
+    flexDirection: "row",
     padding: 8,
     justifyContent: "center",
     alignItems: "center",
   },
+  flag: {
+    // flex: 1,
+    textAlign: "left",
+    justifyContent: "center",
+    alignItems: "center",
+    // marginRight:"80%",
+    // paddingStart:
+  },
+  // flex: { flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end' },
   title: {
-    fontWeight: "bold",
-    fontSize: 18,
-    color:'#128917'
+    // flex:12,
+    // fontWeight: "bold",
+    fontStyle:'regular',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    fontSize: 24,
+    color: "#128917",
+    fontWeight: "300",
   },
 });

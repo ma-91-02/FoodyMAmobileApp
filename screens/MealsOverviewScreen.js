@@ -58,19 +58,33 @@ function MealsOverviewScreen({ route, navigation }) {
       imageUrl: item.imageUrl,
       duration: item.duration,
       price: item.price,
+      ingredients:item.ingredients,
       tableNumber: tableNumber,
     };
     return <MealItem {...mealItem} />;
   }
   return (
-    <View>
+    <View style={styles.contianer}>
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={renderMealItem}
+        // numColumns={2}
       />
     </View>
   );
 }
 
 export default MealsOverviewScreen;
+
+
+const styles= StyleSheet.create({
+  contianer:{
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#fff",
+    height: "100%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  }
+});
