@@ -8,9 +8,12 @@ import MealItem from "../components/MealItem";
 function MealsOverviewScreen({ route, navigation }) {
   const [fetchedCategory, setFechedCategory] = useState([]);
   const [fetchedMeal, setFechedMeal] = useState([]);
-  const langId = route.params.languageId;
+  // const langId = route.params.languageId;
+  // const catId = route.params.categoryId;
+  // const tableNumber = route.params.tableNumber;
+  const langId = '';
   const catId = route.params.categoryId;
-  const tableNumber = route.params.tableNumber;
+  const tableNumber = 3;
 
   // fetch category
   useEffect(() => {
@@ -34,7 +37,7 @@ function MealsOverviewScreen({ route, navigation }) {
       (category) => category.id === catId && category.language === langId
     );
     // to set title of secreen
-    navigation.setOptions({ title: categoryTitle.title });
+    // navigation.setOptions({ title: categoryTitle.title });
   }
   // all meals to show in this screen
   let data;

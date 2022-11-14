@@ -2,16 +2,30 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Button, View } from "react-native";
 import LanguagesScreen from "./screens/LanguagesScreen";
 import CategoriesScreen from "./screens/CategoriesScreen";
+import FavoritesScreen from './screens/FavoritesScreen';
 import SelectTableScreen from "./screens/SelectTableScreen";
 import SelectServicesScreen from "./screens/SelectServicesScreen";
 import WaiterScreen from "./screens/WaiterScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import UserScreen from "./screens/UserScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CardScreen from "./screens/CardScreen";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function BottomTabs() {
+  return (
+    <Tab.Navigator screenOptions={{headerShown:false}}>
+      <Tab.Screen name="All Categories" component={CategoriesScreen} />
+      <Tab.Screen name="Favorite" component={FavoritesScreen} />
+      <Tab.Screen name="User" component={UserScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -35,7 +49,7 @@ export default function App() {
           <Stack.Screen name="Languages" component={LanguagesScreen}  />
           <Stack.Screen
             name="Categores"
-            component={CategoriesScreen}
+            component={BottomTabs}
             options={{ title: "All Categories" }}
           />
           <Stack.Screen
@@ -62,14 +76,7 @@ export default function App() {
           <Stack.Screen
             name="MealDetail"
             component={MealDetailScreen}
-            options={{
-              headerRight: () => {
-                return <Button title="Tap me" />;
-              },
-              headerTitle: () => {
-                return <Button title="Card" />;
-              },
-            }}
+
           />
         </Stack.Navigator>
       </NavigationContainer>

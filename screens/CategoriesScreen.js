@@ -6,8 +6,10 @@ import { fetchCategory, fetchCategoryContent } from "../util/http";
 function CategoriesScreen({ route, navigation }) {
   const [fetchedCategory, setFechedCategory] = useState([]);
   const [fetchedCategoryContent, setFechedCategoryContent] = useState([]);
-  const langId = route.params.languageId;
-  const tableNumber = route.params.tableNumber;
+  const langId = '';
+  const tableNumber = 3;
+  // const langId = route.params.languageId;
+  // const tableNumber = route.params.tableNumber;
 
   // fetch Category content
   useEffect(() => {

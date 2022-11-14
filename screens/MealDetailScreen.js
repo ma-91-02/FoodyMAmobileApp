@@ -10,6 +10,10 @@ import {
 } from "react-native";
 import { useLayoutEffect, useEffect, useState, useContext } from "react";
 import { qContext } from "../store/card-context";
+import IconButton from "../components/IconButton";
+import TabsBottom from "../components/MealDetail/TabsBottom";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FavoritesScreen from "./FavoritesScreen";
 
 import {
   postMealCard,
@@ -22,6 +26,8 @@ import {
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import UserScreen from "./UserScreen";
+const Tab = createBottomTabNavigator();
 
 function MealDetailScreen({ route, navigation }) {
   const [fetchedMeal, setFechedMeal] = useState([]);
@@ -40,7 +46,6 @@ function MealDetailScreen({ route, navigation }) {
     }
     getMeal();
   }, []);
-
   // fetch card
   useEffect(() => {
     async function getCard() {
@@ -48,7 +53,8 @@ function MealDetailScreen({ route, navigation }) {
       setFechedCard(card);
     }
     getCard();
-  }, []);
+  }, [pressAddMealCardHandler]);
+
   // console.log(fetchedCard );
   // to select meal
   let data = "empty";
@@ -62,6 +68,7 @@ function MealDetailScreen({ route, navigation }) {
   let dataCard = "empty";
   if (fetchedCard.length > 0) {
     dataCard = fetchedCard.find((card) => card.id === mealId);
+    // setFechedCard(dataCard);
   }
 
   // Start function post to db
@@ -99,7 +106,7 @@ function MealDetailScreen({ route, navigation }) {
   //     MealId: mealId,
   //   });
   // }
-
+  // const headerButtonPressHandler = () => {};
   if (data !== "empty") {
     // start main function
     return (
@@ -144,11 +151,7 @@ function MealDetailScreen({ route, navigation }) {
             </View>
           </View>
         </View>
-        <View style={styles.footer}>
-          <Button title="btn" />
-          <Button title="btn" />
-          <Button title="btn" />
-        </View>
+         <TabsBottom/>
       </>
     );
   }
@@ -220,7 +223,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     overflow: Platform.os === "android" ? "hidden" : "visible",
     // textAlign:'center'
-    padding:8,
+    padding: 8,
   },
   containerBtnAdd: {
     backgroundColor: "rgba(210, 255, 175, 0.2)",
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     paddingTop: 16,
-    paddingBottom:16,
+    paddingBottom: 16,
   },
   btn: {
     borderBottomLeftRadius: 20,
@@ -240,11 +243,5 @@ const styles = StyleSheet.create({
     // height:20,
     width: "90%",
   },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    // backgroundColor:'#D2FFAF',
-    padding: 20,
-    // overflow: Platform.os === "android" ? "hidden" : "visible",
-  },
+
 });
