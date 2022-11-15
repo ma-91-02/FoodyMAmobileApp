@@ -5,16 +5,14 @@ import {
   StyleSheet,
   ScrollView,
   Button,
-  TouchableOpacity,
-  Platform,
 } from "react-native";
 import { useLayoutEffect, useEffect, useState, useContext } from "react";
-import { qContext } from "../store/card-context";
-import IconButton from "../components/IconButton";
-import TabsBottom from "../components/MealDetail/TabsBottom";
+import { useSelector, useDispatch } from "react-redux";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FavoritesScreen from "./FavoritesScreen";
-
+import { qContext } from "../store/card-context";
+import TabsBottom from "../components/TabsBottom";
+import CardButton from "../components/CardButton";
+import Ingredients from "../components/Ingredients";
 import {
   postMealCard,
   fetchMeal,
@@ -27,9 +25,15 @@ import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import UserScreen from "./UserScreen";
-const Tab = createBottomTabNavigator();
+import AddToCartButton from "../components/AddToCartButton";
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
+import { addCard, removeCard } from "../store/redux/card";
 
 function MealDetailScreen({ route, navigation }) {
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+  const cardMealIds = useSelector((state) => state.cardMeals.ids);
+  const dispatch = useDispatch();
+
   const [fetchedMeal, setFechedMeal] = useState([]);
   const [fetchedCard, setFechedCard] = useState([]);
   const [quantity, setQuantity] = useState(0);
@@ -66,19 +70,40 @@ function MealDetailScreen({ route, navigation }) {
 
   // to select meal
   let dataCard = "empty";
+  let mealIsFavorite;
+  let mealsIsCard;
   if (fetchedCard.length > 0) {
     dataCard = fetchedCard.find((card) => card.id === mealId);
-    // setFechedCard(dataCard);
+    mealIsFavorite = favoriteMealIds.includes(mealId);
+    mealsIsCard = cardMealIds.includes(mealId);
+
+    // to set title of secreen
+    navigation.setOptions({ title: "" });
   }
 
+  function changeFavoriteStatusHandler() {
+    if (mealIsFavorite) {
+      dispatch(removeFavorite({ id: mealId }));
+    } else {
+      dispatch(addFavorite({ id: mealId }));
+    }
+  }
+
+  function changeCardHandler() {
+    if (mealsIsCard) {
+      dispatch(removeCard({ id: mealId }));
+    } else {
+      dispatch(addCard({ id: mealId }));
+    }
+  }
   // Start function post to db
   function pressAddMealCardHandler() {
     const dataPost = {
-      // _id:'636571cfe6613748943b0747',
-      // tableNumber: tableNumber,
-      // MealTitle: data.title,
-      // MealCount: 1,
-      // simpleLang: langId,
+      _id: "636571cfe6613748943b0747",
+      tableNumber: tableNumber,
+      MealTitle: data.title,
+      MealCount: 1,
+      simpleLang: langId,
       mealId: mealId,
     };
     postMealCard(dataPost);
@@ -117,41 +142,17 @@ function MealDetailScreen({ route, navigation }) {
         <View style={styles.container}>
           <ScrollView style={styles.rootContainer}>
             <Text style={styles.title}>{data.title}</Text>
-            <MealDetails
-              duration={data.duration}
-              price={data.price}
-              textStyle={styles.detailText}
+            <Button
+              title={mealIsFavorite ? "Remove From Favorite":"Add To Favorite"  }
+              onPress={changeFavoriteStatusHandler}
+              color="green"
             />
-            <Button title="+" onPress={pressAddMealCardHandler} />
-            <Text>{quantity}</Text>
-            <Button title="-" onPress={pressDeleteMealCardHandler} />
-            <View style={styles.listOuterContainer}>
-              <View style={styles.listContainer}>
-                <Subtitle>Ingredients</Subtitle>
-                <Text>{data.ingredients}</Text>
-                {/* <List data={data.ingredients} /> */}
-                <Subtitle>Steps</Subtitle>
-                {/* <List data={data.steps} /> */}
-              </View>
-            </View>
+            <Ingredients />
           </ScrollView>
-          <View style={styles.mainCon}>
-            <View style={styles.card}>
-              <TouchableOpacity>
-                <Text>Card</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.containerBtnAdd}>
-              <View style={styles.btn}>
-                <Button
-                  title={`Add to cart for ${data.price}`}
-                  color="#128917"
-                />
-              </View>
-            </View>
-          </View>
         </View>
-         <TabsBottom/>
+        <AddToCartButton title={mealsIsCard? 'Remove From Cart ':'Add To Cart '} onPress={changeCardHandler} Price={data.price} />
+        <CardButton navigation={navigation} route={route} value={quantity} />
+        <TabsBottom navigation={navigation} route={route} />
       </>
     );
   }
@@ -170,13 +171,12 @@ const styles = StyleSheet.create({
     left: "5%",
     width: "90%",
     height: 185,
-    zIndex: 3,
+    zIndex: 4,
     borderRadius: 10,
   },
   container: {
     flex: 1,
-    // padding: 16,
-    marginTop: 60,
+    marginTop: 50,
     backgroundColor: "#fff",
     height: "100%",
     borderTopLeftRadius: 20,
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
   },
   rootContainer: {
     // marginBottom: 32,
+    // backgroundColor:'#fff',
     paddingTop: 155,
     height: "100%",
   },
@@ -191,57 +192,10 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "center",
     fontSize: 24,
-    margin: 8,
+    marginTop: 8,
     color: "#128917",
   },
   detailText: {
     color: "#128917",
   },
-  listOuterContainer: {
-    alignItems: "center",
-  },
-  listContainer: {
-    width: "90%",
-  },
-  mainCon: {
-    paddingTop: 20,
-  },
-  card: {
-    position: "absolute",
-    width: 50,
-    height: 50,
-    backgroundColor: "green",
-    right: 16,
-    top: 0,
-    borderRadius: 25,
-    zIndex: 6,
-    elevation: 4,
-    // backgroundColor: "#F4FFEB",
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 4,
-    overflow: Platform.os === "android" ? "hidden" : "visible",
-    // textAlign:'center'
-    padding: 8,
-  },
-  containerBtnAdd: {
-    backgroundColor: "rgba(210, 255, 175, 0.2)",
-    zIndex: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    paddingTop: 16,
-    paddingBottom: 16,
-  },
-  btn: {
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    zIndex: 5,
-    backgroundColor: "#fff",
-    // height:20,
-    width: "90%",
-  },
-
 });

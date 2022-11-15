@@ -3,17 +3,16 @@ import { useLayoutEffect, useEffect, useState } from "react";
 import { fetchCategory, fetchMeal } from "../util/http";
 
 import MealItem from "../components/MealItem";
+import TabsBottom from "../components/TabsBottom";
+import CardButton from "../components/CardButton";
 // import { MEALS, CATEGORIES } from "../data/dummy-data";
 
 function MealsOverviewScreen({ route, navigation }) {
   const [fetchedCategory, setFechedCategory] = useState([]);
   const [fetchedMeal, setFechedMeal] = useState([]);
-  // const langId = route.params.languageId;
-  // const catId = route.params.categoryId;
-  // const tableNumber = route.params.tableNumber;
-  const langId = '';
+  const langId = route.params.languageId;
   const catId = route.params.categoryId;
-  const tableNumber = 3;
+  const tableNumber = route.params.tableNumber;
 
   // fetch category
   useEffect(() => {
@@ -37,7 +36,7 @@ function MealsOverviewScreen({ route, navigation }) {
       (category) => category.id === catId && category.language === langId
     );
     // to set title of secreen
-    // navigation.setOptions({ title: categoryTitle.title });
+    navigation.setOptions({ title: categoryTitle.title });
   }
   // all meals to show in this screen
   let data;
@@ -61,33 +60,36 @@ function MealsOverviewScreen({ route, navigation }) {
       imageUrl: item.imageUrl,
       duration: item.duration,
       price: item.price,
-      ingredients:item.ingredients,
+      ingredients: item.ingredients,
       tableNumber: tableNumber,
     };
     return <MealItem {...mealItem} />;
   }
   return (
-    <View style={styles.contianer}>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMealItem}
-        // numColumns={2}
-      />
-    </View>
+    <>
+      <View style={styles.contianer}>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.id}
+          renderItem={renderMealItem}
+          // numColumns={2}
+        />
+      </View>
+      <CardButton navigation={navigation} route={route} />
+      <TabsBottom navigation={navigation} route={route} />
+    </>
   );
 }
 
 export default MealsOverviewScreen;
 
-
-const styles= StyleSheet.create({
-  contianer:{
+const styles = StyleSheet.create({
+  contianer: {
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",
     height: "100%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-  }
+  },
 });

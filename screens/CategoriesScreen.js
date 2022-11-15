@@ -1,15 +1,17 @@
 import { useLayoutEffect, useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, Text } from "react-native";
 import CategoryGridTitle from "../components/CategoryGridTitle";
+import TabsBottom from "../components/TabsBottom";
+import CardButton from "../components/CardButton";
 import { fetchCategory, fetchCategoryContent } from "../util/http";
 
 function CategoriesScreen({ route, navigation }) {
   const [fetchedCategory, setFechedCategory] = useState([]);
   const [fetchedCategoryContent, setFechedCategoryContent] = useState([]);
-  const langId = '';
-  const tableNumber = 3;
-  // const langId = route.params.languageId;
-  // const tableNumber = route.params.tableNumber;
+  // const langId = '';
+  // const tableNumber = 3;
+  const langId = route.params.languageId;
+  const tableNumber = route.params.tableNumber;
 
   // fetch Category content
   useEffect(() => {
@@ -38,7 +40,7 @@ function CategoriesScreen({ route, navigation }) {
       (category) => category.language === langId
     );
     // navigation.setOptions({ title: categoryTitle.pageTitle });
-    navigation.setOptions({ title: '' });
+    navigation.setOptions({ title: "" });
   } else {
   }
 
@@ -47,7 +49,7 @@ function CategoriesScreen({ route, navigation }) {
     function pressHandler() {
       navigation.navigate("MealsOverviewScreen", {
         languageId: langId,
-        categoryId: itemData.item.id ,
+        categoryId: itemData.item.id,
         tableNumber: tableNumber || 0,
       });
     }
@@ -66,6 +68,8 @@ function CategoriesScreen({ route, navigation }) {
           numColumns={2}
         />
       </View>
+      <CardButton navigation={navigation} route={route} />
+      <TabsBottom navigation={navigation} route={route} />
     </>
   );
 }
