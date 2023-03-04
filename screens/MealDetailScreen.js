@@ -27,9 +27,10 @@ import List from "../components/MealDetail/List";
 import UserScreen from "./UserScreen";
 import AddToCartButton from "../components/AddToCartButton";
 import { addFavorite, removeFavorite } from "../store/redux/favorites";
-import { addCard, removeCard } from "../store/redux/card";
+import { addCard, removeCard, cartActions } from "../store/redux/card-slice";
 
 function MealDetailScreen({ route, navigation }) {
+  const cartQuantity = useSelector((state) => state.cart.totalQuantity);
   const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
   const cardMealIds = useSelector((state) => state.cardMeals.ids);
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function MealDetailScreen({ route, navigation }) {
   const langId = route.params.languageId;
   const mealId = route.params.mealId;
   const tableNumber = route.params.tableNumber;
+  // console.log(tableNumber+ "=======");
   // fetch meal
   useEffect(() => {
     async function getMeal() {
@@ -89,6 +91,19 @@ function MealDetailScreen({ route, navigation }) {
     }
   }
 
+  //////// add to cart using redux
+
+  const addToCartHandler = () => {
+    dispatch(
+      cartActions.addItemToCart({
+        id: mealId,
+        title: data.title,
+        price: data.price,
+        imageUrl:data.imageUrl,
+      })
+    );
+  };
+
   function changeCardHandler() {
     if (mealsIsCard) {
       dispatch(removeCard({ id: mealId }));
@@ -122,15 +137,7 @@ function MealDetailScreen({ route, navigation }) {
     postDeleteMealCard(dataPost);
     setQuantity(0);
   }
-  // function pressMealCardHandler() {
-  //   navigation.navigate("CardScreen", {
-  //     tableNumber: tableNumber,
-  //     MealTitle: data.title,
-  //     MealCount: 1,
-  //     simpleLang: langId,
-  //     MealId: mealId,
-  //   });
-  // }
+
   // const headerButtonPressHandler = () => {};
   if (data !== "empty") {
     // start main function
@@ -143,15 +150,27 @@ function MealDetailScreen({ route, navigation }) {
           <ScrollView style={styles.rootContainer}>
             <Text style={styles.title}>{data.title}</Text>
             <Button
-              title={mealIsFavorite ? "Remove From Favorite":"Add To Favorite"  }
+              title={
+                mealIsFavorite ? "Remove From Favorite" : "Add To Favorite"
+              }
               onPress={changeFavoriteStatusHandler}
               color="green"
             />
+            <Button title="+" onPress={addToCartHandler} />
             <Ingredients />
           </ScrollView>
         </View>
-        <AddToCartButton title={mealsIsCard? 'Remove From Cart ':'Add To Cart '} onPress={changeCardHandler} Price={data.price} />
-        <CardButton navigation={navigation} route={route} value={quantity} />
+        <AddToCartButton
+          title={mealsIsCard ? "Remove From Cart " : "Add To Cart "}
+          onPress={changeCardHandler}
+          Price={data.price}
+        />
+        <CardButton
+          navigation={navigation}
+          route={route}
+          value={cartQuantity}
+          tableNumber={tableNumber}
+        />
         <TabsBottom navigation={navigation} route={route} />
       </>
     );

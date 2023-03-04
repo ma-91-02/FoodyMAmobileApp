@@ -44,7 +44,11 @@ function MealItem({
             <View style={styles.block2}>
               <Text style={styles.title}>{title}</Text>
               {/* <Text>{ingredients}</Text> */}
-              <MealDetails duration={duration} price={price} ingredients={ingredients}/>
+              <MealDetails
+                duration={duration}
+                price={price}
+                ingredients={ingredients}
+              />
             </View>
           </View>
         </Pressable>
@@ -75,9 +79,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     overflow: "hidden",
-    height:140,
-    borderBottomLeftRadius:20,
-    borderTopLeftRadius:20,
+    height: 140,
+    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 20,
   },
   block1: {
     flex: 1,
@@ -92,8 +96,8 @@ const styles = StyleSheet.create({
     height: 140,
   },
   title: {
-    flex:1,
-    color:'#128917',
+    flex: 1,
+    color: "#128917",
     fontWeight: "500",
     textAlign: "center",
     fontSize: 16,

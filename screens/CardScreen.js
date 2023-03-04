@@ -1,9 +1,12 @@
 import { Text, Button, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchMeal } from "../util/http";
+import { fetchMeal, postMealCard } from "../util/http";
 import CardItem from "../components/CardItem";
+import { cartActions } from "../store/redux/card-slice";
 function CardScreen({ route, navigation }) {
+  const tableNumber = route.params.tableNumber;
+  console.log(tableNumber);
   const [fetchedMeal, setFechedMeal] = useState([]);
   // fetch meal
   useEffect(() => {
@@ -14,9 +17,12 @@ function CardScreen({ route, navigation }) {
     getMeal();
   }, []);
   const cardMealIds = useSelector((state) => state.cardMeals.ids);
+  const cartItems = useSelector((state) => state.cart.items);
+  console.log('======= redux =======');
+  console.log(cartItems);
   const cardMeals = fetchedMeal.filter((meal) => cardMealIds.includes(meal.id));
-  console.log(cardMeals);
-  if (cardMeals.length === 0) {
+
+  if (cartItems.length === 0) {
     return <Text>You have no card meals yet.</Text>;
   }
 
@@ -33,13 +39,25 @@ function CardScreen({ route, navigation }) {
     };
     return <CardItem {...mealItem} />;
   };
+  const pressOrderHandler = () => {
+    const dataPost = {
+      _id: "636571cfe6613748943b0747",
+      tableNumber: tableNumber,
+      mealId: cardMeals.map((p) => p.id),
+      constant: cardMeals.map((p) => p.title),
+    };
+    console.log(dataPost.mealId);
+    postMealCard(dataPost);
+  };
+
   return (
     <>
       <FlatList
-        data={cardMeals}
+        data={cartItems}
         keyExtractor={(item) => item.id}
         renderItem={renderMealItem}
       />
+      <Button title="order" onPress={pressOrderHandler} />
     </>
   );
 }

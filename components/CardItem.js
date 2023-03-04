@@ -49,6 +49,7 @@ function CardItem({
                 price={price}
                 ingredients={ingredients}
               />
+              <Text>0</Text>
             </View>
           </View>
         </Pressable>

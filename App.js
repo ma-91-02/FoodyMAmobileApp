@@ -15,7 +15,7 @@ import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
 import UserScreen from "./screens/UserScreen";
 import CardScreen from "./screens/CardScreen";
-import { store } from "./store/redux/store";
+import { store } from "./store/redux";
 const Stack = createNativeStackNavigator();
 
 export default function App() {

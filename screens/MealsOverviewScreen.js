@@ -14,6 +14,7 @@ function MealsOverviewScreen({ route, navigation }) {
   const catId = route.params.categoryId;
   const tableNumber = route.params.tableNumber;
 
+
   // fetch category
   useEffect(() => {
     async function getCategory() {

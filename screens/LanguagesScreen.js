@@ -16,69 +16,69 @@ import { fetchLangauges } from "../util/http";
 
 function LanguagesScreen({ navigation }) {
   const [fetchedLanguages, setFechedLanguages] = useState([]);
-
-  useEffect(() => {
-    async function getLanguages() {
-      const languages = await fetchLangauges();
-      setFechedLanguages(languages);
-    }
-    getLanguages();
-  }, []);
-  navigation.setOptions({ title: "" }); /// to set page title
-  // console.log(fetchedLanguages);
-  try {
-    if (fetchedLanguages.length > 0) {
-      function renderLanguageItem(itemData) {
-        // console.log(itemData.item);
-        function pressHandler() {
-          navigation.navigate("SelectTable", {
-            languageId: itemData.item.lang,
-          });
+    useEffect(() => {
+      async function getLanguages() {
+        const languages = await fetchLangauges();
+        setFechedLanguages(languages);
+      }
+      getLanguages();
+    }, []);
+    navigation.setOptions({ title: "" }); /// to set page title
+    // console.log(fetchedLanguages);
+    try {
+      if (fetchedLanguages.length > 0) {
+        function renderLanguageItem(itemData) {
+          // console.log(itemData.item);
+          function pressHandler() {
+            navigation.navigate("SelectTable", {
+              languageId: itemData.item.lang,
+            });
+          }
+          // return <LanguagesTitle title={itemData.item.lang} />;
+          return (
+            <LanguagesTitle title={itemData.item.lang} onPress={pressHandler} />
+            );
         }
-        // return <LanguagesTitle title={itemData.item.lang} />;
         return (
-          <LanguagesTitle title={itemData.item.lang} onPress={pressHandler} />
+          <>
+            <View style={styles.containerText}>
+              <Text style={styles.text}>Select Language </Text>
+            </View>
+            <View style={styles.container}>
+              <View style={styles.containerLang}>
+                <FlatList
+                  data={fetchedLanguages}
+                  keyExtractor={(item) => item.id}
+                  renderItem={renderLanguageItem}
+                />
+              </View>
+              <View style={styles.btnMain}>
+                <LinearGradient
+                  colors={["#EAF942", "#D2FFAF"]}
+                  style={styles.btnContainer}
+                >
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        color: "#128917",
+                        fontSize: 16,
+                        fontWeight: "600",
+                      }}
+                    >
+                      Exit
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+            </View>
+          </>
         );
       }
-      return (
-        <>
-          <View style={styles.containerText}>
-            <Text style={styles.text}>Select Language </Text>
-          </View>
-          <View style={styles.container}>
-            <View style={styles.containerLang}>
-              <FlatList
-                data={fetchedLanguages}
-                keyExtractor={(item) => item.id}
-                renderItem={renderLanguageItem}
-              />
-            </View>
-            <View style={styles.btnMain}>
-              <LinearGradient
-                colors={["#EAF942", "#D2FFAF"]}
-                style={styles.btnContainer}
-              >
-                <TouchableOpacity>
-                  <Text
-                    style={{
-                      color: "#128917",
-                      fontSize: 16,
-                      fontWeight: "600",
-                    }}
-                  >
-                    Exit
-                  </Text>
-                </TouchableOpacity>
-              </LinearGradient>
-            </View>
-          </View>
-        </>
-      );
+    } catch (error) {
+      console.log("some error");
     }
-  } catch (error) {
-    console.log("some error");
   }
-}
+
 
 export default LanguagesScreen;
 
