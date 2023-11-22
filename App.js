@@ -21,21 +21,21 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
               headerStyle: {
-                backgroundColor: "#D2FFAF",
+                backgroundColor: "#1C2F2A",
               },
-              headerTintColor: "#128917",
+              headerTintColor: "#F1A541",
               headerTitleStyle: {
                 fontWeight: "bold",
                 fontSize: 24,
               },
               headerShadowVisible: false,
-              contentStyle: { backgroundColor: "#D2FFAF" },
+              contentStyle: { backgroundColor: "#1C2F2A" },
             }}
           >
             <Stack.Screen name="Languages" component={LanguagesScreen} />
@@ -47,12 +47,12 @@ export default function App() {
             <Stack.Screen
               name="SelectTable"
               component={SelectTableScreen}
-              options={{
-                headerStyle: {
-                  backgroundColor: "#EAF942",
-                },
-                headerTintColor: "#128917",
-              }}
+              // options={{
+              //   headerStyle: {
+              //     backgroundColor: "#1c1c1e",
+              //   },
+              //   headerTintColor: "#128917",
+              // }}
             />
             <Stack.Screen
               name="SelectServices"

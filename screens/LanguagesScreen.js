@@ -52,24 +52,7 @@ function LanguagesScreen({ navigation }) {
                   renderItem={renderLanguageItem}
                 />
               </View>
-              <View style={styles.btnMain}>
-                <LinearGradient
-                  colors={["#EAF942", "#D2FFAF"]}
-                  style={styles.btnContainer}
-                >
-                  <TouchableOpacity>
-                    <Text
-                      style={{
-                        color: "#128917",
-                        fontSize: 16,
-                        fontWeight: "600",
-                      }}
-                    >
-                      Exit
-                    </Text>
-                  </TouchableOpacity>
-                </LinearGradient>
-              </View>
+              
             </View>
           </>
         );
@@ -84,29 +67,29 @@ export default LanguagesScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#1C2F2A",
     height: "100%",
     textAlign: "center",
     borderTopLeftRadius: 50,
   },
   containerText: {
-    paddingTop: 50,
+    // paddingTop: 50,
     paddingBottom: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#D2FFAF    ",
+    backgroundColor: "#F1A541 ",
     borderBottomWidth: 2,
     borderColor: "#fff",
     marginLeft: "25%",
     marginRight: "25%",
-    marginBottom: 30,
+    // marginBottom: 30,
   },
   text: {
     // borderWidth:20,
     borderBottomColor: "#fff",
     fontSize: 24,
     fontWeight: "bold",
-    color: "#128917",
+    color: "#F1A541",
   },
   containerLang: {
     marginTop: 25,
@@ -115,17 +98,17 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     paddingBottom: 20,
     paddingTop: 48,
-    height: "60%",
+    height: "80%",
     // borderWidth: 1,
     borderRadius: 16,
     // zIndex:99,
     // borderColor: "#F4FFEB",
     elevation: 4,
-    backgroundColor: "#F4FFEB",
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    // backgroundColor: "#1c2f2a",
+    // shadowColor: "black",
+    // shadowOpacity: 0.25,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowRadius: 4,
     overflow: Platform.os === "android" ? "hidden" : "visible",
   },
   btnContainer: {

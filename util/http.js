@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const BACKEND_URL = "https://foody-ma-backend.herokuapp.com";
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "http://localhost:80";
 
 //////////////////// Language /////////////
 export async function fetchLangauges() {

@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     margin: 0,
-    backgroundColor: "#EAF942",
+    // backgroundColor: "",
   },
   textContainer: {
     marginTop: 60,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: "#128917",
+    color: "#F1A541",
     fontWeight: "bold",
 
     padding: 0,
